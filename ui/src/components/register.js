@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_HOST, SIGNUP } from '../constants';
+import { ICON } from '../static/png/icon';
 const Register = ({auth}) => {
 
     const [email, setEmail] = useState('');
@@ -22,15 +23,6 @@ const Register = ({auth}) => {
     
     const handleSubmit = async () => {
         setError(null);
-        if(firstname===''){
-            setError('First name can not be empty');
-            return;
-        }
-
-        if(lastname===''){
-            setError('Last name can not be empty');
-            return;
-        }
 
         if(email===''){
             setError('Email can not be empty');
@@ -39,6 +31,17 @@ const Register = ({auth}) => {
 
         if(password===''){
             setError('Password can not be empty');
+            return;
+        }
+
+
+        if(firstname===''){
+            setError('First name can not be empty');
+            return;
+        }
+
+        if(lastname===''){
+            setError('Last name can not be empty');
             return;
         }
 
@@ -56,6 +59,7 @@ const Register = ({auth}) => {
     };
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
+            <ICON />
             {error && (
             <div role="alert" className="alert alert-error w-1/3 mb-5">
                 <span>Error! {error}</span>
