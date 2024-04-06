@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_HOST, SIGNIN } from '../constants';
 import { Link, useNavigate } from 'react-router-dom';
-import icon from '../static/png/icon.png';
+import { ICON } from '../static/png/icon';
 const Login = ({auth}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -46,8 +46,7 @@ const Login = ({auth}) => {
     }
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
-            <img src={icon} height={700} width={700} alt="icon"/>
-            
+            <ICON />
             {error && (
             <div role="alert" className="alert alert-error w-1/3 mt-5 mb-5">
                 <span>Error! {error}</span>
