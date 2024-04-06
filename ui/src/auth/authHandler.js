@@ -2,8 +2,9 @@ import Cookies from 'js-cookie';
 
 class AuthService {
 
-  setSession(token) {
+  setSession(token, id) {
     Cookies.set('jwt', token);
+    Cookies.set('id', id);
   }
 
   logout() {
@@ -12,6 +13,10 @@ class AuthService {
 
   getToken() {
     return Cookies.get('jwt');
+  }
+
+  getId() {
+    return Cookies.get('id');
   }
   
   isAuthenticated() {
