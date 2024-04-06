@@ -33,8 +33,9 @@ const Login = ({auth}) => {
         });
         if(response?.data?.result){
             let token = response?.data?.result?.token;
+            let id = response?.data?.result?._id;
             console.log(token)
-            auth.setSession(token);
+            auth.setSession(token, id);
         } else{
             setError('Login failed. Check your credentials again');
         }
