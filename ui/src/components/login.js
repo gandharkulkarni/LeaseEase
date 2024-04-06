@@ -1,7 +1,7 @@
 import { Button } from 'react-daisyui'
 import EmailIcon from '../static/svg/emailIcon'
 import PasswordIcon from '../static/svg/passwordIcon'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_HOST, SIGNIN } from '../constants';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,6 +11,11 @@ const Login = ({auth}) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState();
     let navigate = useNavigate();
+    useEffect(()=>{
+        if(auth.isAuthenticated()){
+            navigate('/home');
+        }
+    })
     const handleSubmit = async () =>{
         setError(null);
         if(email===''){
@@ -26,8 +31,9 @@ const Login = ({auth}) => {
             email: email,
             password: password
         });
-        if(response?.result){
-            let token = response?.result?.token;
+        if(response?.data?.result){
+            let token = response?.data?.result?.token;
+            console.log(token)
             auth.setSession(token);
         } else{
             setError('Login failed. Check your credentials again');

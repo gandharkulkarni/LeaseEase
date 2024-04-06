@@ -2,7 +2,7 @@ import { Button } from 'react-daisyui'
 import EmailIcon from '../static/svg/emailIcon'
 import PasswordIcon from '../static/svg/passwordIcon'
 import UserIcon from '../static/svg/userIcon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_HOST, SIGNUP } from '../constants';
@@ -14,10 +14,12 @@ const Register = ({auth}) => {
     const [lastname, setLastname] = useState('');
     const [error, setError] = useState();
     let navigate = useNavigate();
+    useEffect(()=>{
+        if(auth.isAuthenticated()){
+            navigate('/home');
+        }
+    })
     
-    if(auth.isAuthenticated()){
-        navigate('/home');
-    }
     const handleSubmit = async () => {
         setError(null);
         if(firstname===''){
@@ -46,8 +48,8 @@ const Register = ({auth}) => {
             email: email,
             password: password
         });
-        if(response?.result){
-            navigate('login')
+        if(response?.data?.result){
+            navigate('/login')
         } else{
             setError('Registration failed')
         }
