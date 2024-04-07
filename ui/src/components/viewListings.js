@@ -17,7 +17,7 @@ export const ViewListings = ({ auth }) => {
                 Authorization: auth.getToken() //the token is a variable which holds the token
             },
             params: {
-                used_id: auth.getId(),
+                user_id: auth.getId(),
                 myListings : 'false'
             }
         });
