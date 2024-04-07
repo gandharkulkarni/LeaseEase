@@ -1,38 +1,38 @@
-import { useState } from "react";
-import { ViewListings } from "./viewListings";
-import { ManageListings } from "./manageListings";
-export const ListingTabs = () =>{
-
-    const [viewListingActive, setViewListingActive] = useState(true);
-    const [viewListingClass, setViewListingClass] = useState('tab tab-active');
-
-    const [addListingActive, setAddListingActive] = useState(false);
-    const [addListingClass, setAddListingClass] = useState('tab');
-    const handleTabClick = (index) =>{
-        if(index){
-            setViewListingClass('tab');
-            setViewListingActive(false);
-
-            setAddListingClass('tab tab-active');
-            setAddListingActive(true);
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+export const ListingTabs = ({allListingTab=false, myListingTab=false}) =>{
+    const [allListingClass, setAllListingClass] = useState('tab tab-active');    
+    const [myListingClass, setMyListingClass] = useState('tab');
+    let navigate = useNavigate();
+    useEffect(()=>{
+        if(myListingTab){
+            setAllListingClass('tab');
+            setMyListingClass('tab tab-active');
         } else{
-            setViewListingClass('tab tab-active');
-            setViewListingActive(true);
+            setAllListingClass('tab tab-active');
+            setMyListingClass('tab');
+        }
+    });
 
-            setAddListingClass('tab');
-            setAddListingActive(false);
+    const handleTabClick = (index) =>{
+        console.log(index)
+        console.log(myListingTab)
+        if(index){
+            setAllListingClass('tab');
+            setMyListingClass('tab tab-active');
+            navigate('/myListings')
+        } else{
+            setAllListingClass('tab tab-active');
+            setMyListingClass('tab');
+            navigate('/allListings')
         }
     }
     return (
-        <div role="tablist" className="tabs tabs-lifted tabs-lg w-full">
-                <div role="tab" className={viewListingClass} onClick={(e)=>{handleTabClick(0)}}>View Listings</div>
-                {viewListingActive && (
-                    <ViewListings />
-                )}
-                <div role="tab" className={addListingClass} onClick={(e)=>{handleTabClick(1)}}>My Listings</div>
-                {addListingActive && (
-                    <ManageListings />
-                )}
+        <div className="flex flex-cols justify-center items-center">
+            <div role="tablist" className="tabs tabs-lifted tabs-lg w-1/2">
+                <button role="tab" className={allListingClass} onClick={(e)=>{handleTabClick(0)}}>All Listings</button>
+                <button role="tab" className={myListingClass} onClick={(e)=>{handleTabClick(1)}}>My Listings</button>
             </div>
+        </div>
     );
 }
