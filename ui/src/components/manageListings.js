@@ -11,9 +11,12 @@ export const ManageListings = ({auth}) =>{
         <div>
             <Navbar auth={auth}/>
             <ListingTabs myListingTab={true}/>
-            <h1>Manage Listings</h1>
-            <button className="btn btn-success" onClick={handleAddListing}>Add Listing</button>
-            <MyListings />
+            <center>
+                <br/>
+                <br/>
+                <button className="btn btn-success" onClick={handleAddListing}>Add Listing</button>
+                <MyListings />
+            </center>
         </div>
     );
 }
