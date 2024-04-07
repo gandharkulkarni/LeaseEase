@@ -3,12 +3,15 @@ import { CrudOperations, Password } from "../../../commons/utils";
 import { JwtGenerator } from "../../../commons/utils";
 import config from "../../appConfig";
 import { Listing } from "../../../commons/models";
+import { LLM } from "../../../commons/utils";
 
 class ListingService {
     public async addListing(listing: any, next: CallableFunction) {
         try {
             const listingResult = await new CrudOperations(Listing).save(listing);
             if (listingResult) {
+                new LLM("image/jpeg",listing.lease_link).loadLLMData(listingResult._id)
+                
                 return next(null, listingResult);
             }
             else {
