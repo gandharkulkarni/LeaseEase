@@ -15,7 +15,7 @@ export const ManageListings = ({auth}) =>{
                 <br/>
                 <br/>
                 <button className="btn btn-success" onClick={handleAddListing}>Add Listing</button>
-                <MyListings />
+                <MyListings auth={auth}/>
             </center>
         </div>
     );

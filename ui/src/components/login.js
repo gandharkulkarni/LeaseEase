@@ -64,7 +64,7 @@ const Login = ({auth}) => {
             </label>
             <Button className="btn btn-active btn-success w-1/3 text-white" onClick={handleSubmit}>Login</Button>
             <br/>
-            <p>Don't have an account? <Link to="/register">Register</Link></p>
+            <p>Don't have an account? <Link className="link link-secondary" to="/register">Register</Link></p>
         </div>
     );
 };
