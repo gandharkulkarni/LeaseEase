@@ -3,13 +3,9 @@ import axios from "axios";
 import { API_HOST, GET_LISTING_TRIVIA } from "../constants";
 
 export const ListingCard = ({ _id, imgSrc, address, rent, auth }) => {
-    const [restaurants, setRestaurant] = useState(null);
-    const [grocery, setGrocery] = useState(null);
-    const [tourist, setTourist] = useState(null);
-    const [streetAddress, setStreetAddress] = useState(null);
     const [listingTrivia, setListingTrivia] = useState(null);
     useEffect(() => {
-        if (streetAddress && restaurants && grocery && tourist) {
+        if (!listingTrivia) {
             fetchListingTrivia()
         }
     })
@@ -23,10 +19,6 @@ export const ListingCard = ({ _id, imgSrc, address, rent, auth }) => {
             }
         })
         setListingTrivia(response?.data?.result);
-        setStreetAddress(response?.data?.result?.property_addr);
-        setGrocery(response?.data?.result?.grocery);
-        setRestaurant(response?.data?.result?.restaurant_places);
-        setTourist(response?.data?.result?.tourist_places);
     }
     return (
         <div>
@@ -36,19 +28,19 @@ export const ListingCard = ({ _id, imgSrc, address, rent, auth }) => {
                     <h2 className="card-title">{address}</h2>
                     <p>Rent : ${rent}</p>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-primary" onClick={() => document.getElementById('listing_modal').showModal()}>Learn more about the place!</button>
-                        <button className="btn btn-warning" onClick={() => document.getElementById('trivia_modal').showModal()}>Trivia</button>
+                        <button className="btn btn-primary" onClick={() => document.getElementById('listing_modal_'+_id).showModal()}>Learn more about the place!</button>
+                        <button className="btn btn-warning" onClick={() => document.getElementById('trivia_modal_'+_id).showModal()}>Trivia</button>
                     </div>
                 </div>
             </div>
 
-            <dialog id="listing_modal" className="modal modal-bottom sm:modal-middle">
+            <dialog id={"listing_modal_" + _id} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
                     {listingTrivia ? (
                         <div>
                             <h3 className="font-bold text-lg">Address : {listingTrivia.property_addr}</h3>
                             <p className="py-4">Owner : {listingTrivia.owner} </p>
-                            <p className="py-4"><b>Tenants : {listingTrivia.tenant}</b></p>
+                            <p className="py-4"><b>Tenants : {listingTrivia.tenants}</b></p>
                             <div className="modal-action">
                                 <form method="dialog">
                                     <button className="btn">Close</button>
@@ -61,22 +53,22 @@ export const ListingCard = ({ _id, imgSrc, address, rent, auth }) => {
                     }
                 </div>
             </dialog>
-            <dialog id="trivia_modal" className="modal modal-bottom sm:modal-middle">
+            <dialog id={"trivia_modal_" + _id} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
                     {listingTrivia ? (
                         <div>
                             <h3 className="font-bold text-lg">Trivia!</h3>
                             <h4 className="font-bold text-md">Restautants around here:</h4>
-                            {restaurants.map((name, index) => {
-                                <div key={index} className="badge badge-primary badge-sm"><p className="py-4">{name}</p></div>
+                            {listingTrivia.restaurant_places && listingTrivia.restaurant_places.map((name, index) => {
+                                return (<div key={index}><div className="badge badge-outline badge-primary badge-sm"><p className="py-4">{name}</p></div><br/></div>)
                             })}
                             <h4 className="font-bold text-md">Grocery outlets around here:</h4>
-                            {grocery.map((name, index) => {
-                                <div key={index} className="badge badge-secondary badge-sm"><p className="py-4">{name}</p></div>
+                            {listingTrivia.grocery && listingTrivia.grocery.map((name, index) => {
+                                return (<div key={index}><div className="badge badge-outline badge-secondary badge-sm"><p className="py-4">{name}</p></div><br/></div>)
                             })}
                             <h4 className="font-bold text-md">Tourist around here:</h4>
-                            {tourist.map((name, index) => {
-                                <div key={index} className="badge badge-accent badge-sm"><p className="py-4">{name}</p></div>
+                            {listingTrivia.tourist_places && listingTrivia.tourist_places.map((name, index) => {
+                                return (<div key={index}><div className="badge badge-outline badge-accent badge-sm"><p className="py-4">{name}</p></div><br/></div>)
                             })}
                             <div className="modal-action">
                                 <form method="dialog">

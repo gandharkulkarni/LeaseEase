@@ -24,9 +24,9 @@ export class LLM {
             let restaurants = await this.restaurants(leaseSummarizeObj[keys[0]])
             let grocery = await this.groceryStores(leaseSummarizeObj[keys[0]])
             let obj = {
-                property_addr: leaseSummarizeObj['Property Address'],
-                owner: leaseSummarizeObj['Owner'],
-                tenants: leaseSummarizeObj['Tenants'],
+                property_addr: leaseSummarizeObj[keys[0]],
+                owner: leaseSummarizeObj[keys[1]],
+                tenants: leaseSummarizeObj[keys[2]],
                 tourist_places: touristPlaces,
                 restaurant_places: restaurants,
                 grocery: grocery,
