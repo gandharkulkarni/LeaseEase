@@ -15,8 +15,6 @@ export const ListingTabs = ({allListingTab=false, myListingTab=false}) =>{
     });
 
     const handleTabClick = (index) =>{
-        console.log(index)
-        console.log(myListingTab)
         if(index){
             setAllListingClass('tab');
             setMyListingClass('tab tab-active');
