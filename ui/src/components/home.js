@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ICON } from "../static/png/icon";
 import { ListingTabs } from "./listingTabs";
 import { Navbar } from "./navbar";
+import { ViewListings } from "./viewListings";
 
 const Home = ({ auth }) => {
     let navigate = useNavigate();
@@ -14,10 +14,7 @@ const Home = ({ auth }) => {
 
     return (
         <div>
-            <Navbar auth={auth} />
-            <div className='flex flex-col items-center justify-center mt-20'>
-                <ListingTabs />
-            </div>
+            <ViewListings />
         </div>
     );
 };
