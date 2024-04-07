@@ -34,7 +34,7 @@ export const ViewListings = ({ auth }) => {
                         key={index}
                         className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/4 p-4 mr-2 ml-2"
                     >
-                        <ListingCard imgSrc={obj.photos[0]} address={obj.address} rent={obj.price} />
+                        <ListingCard _id={obj._id} imgSrc={obj.photos[0]} address={obj.address} rent={obj.price} />
                     </div>
                 ))}
             </div>
