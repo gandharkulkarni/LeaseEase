@@ -10,4 +10,6 @@ router.delete("/deleteListing", ListingController.deleteListing);
 
 router.get("/viewListings", ListingController.viewListings);
 
+router.get("/viewListingTrivia", ListingController.viewListingTrivia);
+
 export default router;

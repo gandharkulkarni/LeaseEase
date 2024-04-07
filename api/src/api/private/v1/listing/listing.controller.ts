@@ -53,6 +53,22 @@ class UserController {
       }
     }
 
+    public async viewListingTrivia(request: Request, response: Response, next: NextFunction) {
+      try {
+        
+        ListingService.viewListingTrivia(request.query, (err: any, result: any) => {
+          if (err) {
+            return next(new HttpException(400, err));
+          } else {
+            response.status(200).send(new HttpResponse("viewListingTrivia", result, null, null, null, null));
+          }
+        });
+      }
+      catch (err) {
+        console.log("viewListingTrivia error.");
+      }
+    }
+
 }
 
 export default new UserController();
