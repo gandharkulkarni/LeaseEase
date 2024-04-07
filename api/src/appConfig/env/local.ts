@@ -5,6 +5,7 @@ const config = {
     BACKEND_URL: process.env.BACKEND_URL || "http://localhost:5000",
     FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:3000",
     JWT_KEY: "XNJJDCNDJBCHDVBH",
+    CLAUDE_KEY: "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",
     CORS_OPTIONS: {
         WHITELISTDOMAINS: [
             /.*/ //allow all domains (wildcard match *)

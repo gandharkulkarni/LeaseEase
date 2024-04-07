@@ -7,7 +7,8 @@ let effectiveConfig: {
     MONGO_URL: string,
     BACKEND_URL: string,
     FRONTEND_URL: string,
-    JWT_KEY: string
+    JWT_KEY: string,
+    CLAUDE_KEY: string
 } = localConfig;
 
 
