@@ -96,7 +96,7 @@ export const AddListings = ({ auth }) => {
     }
     return (
         <div>
-            <Navbar />
+            <Navbar auth={auth}/>
             <center>
                 {error && (
                     <div role="alert" className="alert alert-error w-1/3 mt-5 mb-5">
