@@ -5,7 +5,9 @@ import { API_HOST, GET_LISTING, DELETE_LISTING } from "../constants";
 export const MyListings = ({ auth }) => {
     const [listingData, setListingData] = useState(null);
     useEffect(() => {
-        fetchListingData();
+        if(!listingData){
+            fetchListingData();
+        }
     })
     const fetchListingData = async () => {
         let response = await axios.get(API_HOST + GET_LISTING, {
@@ -13,8 +15,8 @@ export const MyListings = ({ auth }) => {
                 Authorization: auth.getToken()
             },
             params: {
-                used_id: auth.getId(),
-                myListings : true
+                user_id: auth.getId(),
+                myListings : 'true'
             }
         });
         setListingData(response?.data?.result);
@@ -35,9 +37,9 @@ export const MyListings = ({ auth }) => {
             <div className="flex min-h-screen flex-col items-center justify-center w-1/2">
                 <div className="container mx-auto my-4 px-12 py-4">
                     <div className="overflow-x-auto">
-                        {listingData && listingData.map((obj) => {
+                        {listingData && listingData.map((obj, index) => {
                             return (
-                                <div>
+                                <div key={index}>
                                     <MyListingCard imgSrc={obj.photos[0]} address={obj.address} rent={obj.price} handleDelete={handleDelete} _id={obj._id} />
                                     <br /><br />
                                 </div>
