@@ -5,7 +5,6 @@ const config = {
     BACKEND_URL: process.env.BACKEND_URL || "http://localhost:5000",
     FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:3000",
     JWT_KEY: "XNJJDCNDJBCHDVBH",
-    CLAUDE_KEY: "",
     CORS_OPTIONS: {
         WHITELISTDOMAINS: [
             /.*/ //allow all domains (wildcard match *)
