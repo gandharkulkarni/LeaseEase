@@ -1,59 +1,46 @@
-import { Navbar } from "react-daisyui";
 import { MyListingCard } from "./myListingCard";
-
-
-export const MyListings = () => {
-    const sample = {
-        "data": {
-            "query": "viewListings",
-            "result": [
-                {
-                    "_id": "6611a7a33b8b174108a6f4a7",
-                    "price": "12334",
-                    "photos": [
-                        "https://res.cloudinary.com/dy3a4tkbu/image/upload/v1712460676/App/tcz0szvr5tnjd1y7jgaz.webp",
-                        "https://res.cloudinary.com/dy3a4tkbu/image/upload/v1712460677/App/vq8geicli1gfcweuycjq.jpg"
-                    ],
-                    "address": "2243 turk boulevard",
-                    "isDeleted": false,
-                    "lease_link": "http://xyz.com",
-                    "user_id": "6610db784ad7ddca7ef270d7",
-                    "createdAt": "2024-04-06T19:50:59.061Z",
-                    "updatedAt": "2024-04-06T19:50:59.061Z",
-                    "__v": 0
-                },
-                {
-                    "_id": "6611953e5bab4d2f992ee7d6",
-                    "price": "1234",
-                    "photos": [
-                        "https://res.cloudinary.com/dy3a4tkbu/image/upload/v1712460677/App/vq8geicli1gfcweuycjq.jpg"
-                    ],
-                    "address": "2243 turk boulevard",
-                    "isDeleted": false,
-                    "lease_link": "http://xyz.com",
-                    "user_id": "6610db784ad7ddca7ef270d7",
-                    "createdAt": "2024-04-06T18:32:30.055Z",
-                    "updatedAt": "2024-04-06T18:36:46.182Z",
-                    "__v": 0
-                }
-            ],
-            "error": null,
-            "totalResults": null,
-            "pageNo": null,
-            "message": null
-        }
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_HOST, GET_LISTING, DELETE_LISTING } from "../constants";
+export const MyListings = ({ auth }) => {
+    const [listingData, setListingData] = useState(null);
+    useEffect(() => {
+        fetchListingData();
+    })
+    const fetchListingData = async () => {
+        let response = await axios.get(API_HOST + GET_LISTING, {
+            headers: {
+                Authorization: auth.getToken()
+            },
+            params: {
+                used_id: auth.getId(),
+                myListings : true
+            }
+        });
+        setListingData(response?.data?.result);
+    }
+    const handleDelete = async (_id) => {
+        let response = await axios.delete(API_HOST + DELETE_LISTING, {
+            headers: {
+                Authorization: auth.getToken() //the token is a variable which holds the token
+            },
+            params: {
+                _id: _id,
+            }
+        })
+        fetchListingData()
     }
     return (
         <main>
             <div className="flex min-h-screen flex-col items-center justify-center w-1/2">
                 <div className="container mx-auto my-4 px-12 py-4">
                     <div className="overflow-x-auto">
-                        {sample.data.result.map((obj) => {
+                        {listingData && listingData.map((obj) => {
                             return (
-                            <div>
-                                <MyListingCard imgSrc={obj.photos[0]} address={obj.address} rent={obj.price} />
-                                <br /><br />
-                            </div>
+                                <div>
+                                    <MyListingCard imgSrc={obj.photos[0]} address={obj.address} rent={obj.price} handleDelete={handleDelete} _id={obj._id} />
+                                    <br /><br />
+                                </div>
                             )
                         })}
                     </div>
