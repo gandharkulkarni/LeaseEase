@@ -82,7 +82,7 @@ const Register = ({auth}) => {
                 <input type="text" className="grow" placeholder="Last name" onChange={(e)=>{setLastname(e.target.value)}}/>
             </label>
             <Button className="btn btn-active btn-success w-1/3 text-white" onClick={handleSubmit}>Register</Button>
-            <p>Already have an account? <Link to="/login">Login</Link></p>
+            <p>Already have an account? <Link className="link link-secondary" to="/login">Login</Link></p>
         </div>
     );
   };
