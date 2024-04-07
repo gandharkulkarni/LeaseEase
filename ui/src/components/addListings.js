@@ -2,8 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Navbar } from "./navbar";
+import axios from "axios";
+import { API_HOST, ADD_LISTING } from "../constants";
 
-export const AddListings = () => {
+export const AddListings = ({ auth }) => {
     let navigate = useNavigate();
     const [leaseLink, setLeaseLink] = useState('')
     const [photosLink, setPhotosLink] = useState([])
@@ -63,7 +65,7 @@ export const AddListings = () => {
         }
     }, [tempLinks, uploadType]); // add uploadType to the dependency array
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setError(null);
         if (leaseLink === '') {
             setError('Must upload lease')
@@ -73,12 +75,22 @@ export const AddListings = () => {
             setError('Must upload a photo')
             return;
         }
-        if(rent<1){
+        if (rent < 1) {
             setError('Rent must be greater than 0');
             return;
         }
         console.log(leaseLink);
         console.log(photosLink);
+        console.log(auth.getToken())
+        let response = await axios.post(API_HOST + ADD_LISTING, {
+            price: rent.toString(),
+            photos: photosLink,
+            lease_link: leaseLink,
+            user_id: auth.getId()
+        }, {
+            headers: { Authorization: auth.getToken() }
+        }
+        )
         navigate('/home');
 
     }
@@ -98,7 +110,7 @@ export const AddListings = () => {
                         <h1>Please fill the followind details</h1>
                         <div className="mt-5 mb-5 w-98">
                             <label className="input input-bordered flex items-center gap-2">
-                                <input type="number" className="grow" placeholder="Rent" onChange={(e)=>setRent(e.target.value)} value={rent} />
+                                <input type="number" className="grow" placeholder="Rent" onChange={(e) => setRent(e.target.value)} value={rent} />
                             </label>
                             <br />
                             <button id="upload_lease" className="cloudinary-button mr-5 w-1/3">Upload Lease</button>
